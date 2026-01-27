@@ -69,8 +69,8 @@
       proposer: tx-sender,
       title: title,
       description: description,
-      start-block: block-height,
-      end-block: (+ block-height VOTING-PERIOD),
+      start-block: stacks-block-height,
+      end-block: (+ stacks-block-height VOTING-PERIOD),
       votes-for: u0,
       votes-against: u0,
       executed: false
@@ -93,7 +93,7 @@
     (voting-power (get voting-power member-info))
   )
     ;; Check if voting is still open
-    (asserts! (<= block-height (get end-block proposal)) ERR-VOTING-CLOSED)
+    (asserts! (<= stacks-block-height (get end-block proposal)) ERR-VOTING-CLOSED)
     ;; Check if already voted
     (asserts! (is-none (map-get? votes { proposal-id: proposal-id, voter: tx-sender })) ERR-ALREADY-VOTED)
     ;; Record the vote
@@ -129,7 +129,7 @@
 (define-public (execute-proposal (proposal-id uint))
   (let ((proposal (unwrap! (map-get? proposals proposal-id) ERR-PROPOSAL-NOT-FOUND)))
     ;; Check voting has ended
-    (asserts! (> block-height (get end-block proposal)) ERR-PROPOSAL-ACTIVE)
+    (asserts! (> stacks-block-height (get end-block proposal)) ERR-PROPOSAL-ACTIVE)
     ;; Check not already executed
     (asserts! (not (get executed proposal)) ERR-PROPOSAL-EXECUTED)
     ;; Check it passed
@@ -163,7 +163,7 @@
       voting-power: (/ stake-amount u1000000), ;; 1 voting power per STX
       proposals-created: u0,
       total-votes: u0,
-      joined-at: block-height
+      joined-at: stacks-block-height
     })
     (var-set member-count (+ (var-get member-count) u1))
     (var-set treasury-balance (+ (var-get treasury-balance) stake-amount))
@@ -210,7 +210,7 @@
       voting-power: voting-power,
       proposals-created: u0,
       total-votes: u0,
-      joined-at: block-height
+      joined-at: stacks-block-height
     })
     (var-set member-count (+ (var-get member-count) u1))
     (ok true)))
@@ -244,7 +244,7 @@
 (define-read-only (is-proposal-active (proposal-id uint))
   (let ((proposal (map-get? proposals proposal-id)))
     (match proposal
-      p (ok (and (<= block-height (get end-block p)) (not (get executed p))))
+      p (ok (and (<= stacks-block-height (get end-block p)) (not (get executed p))))
       (err ERR-PROPOSAL-NOT-FOUND))))
 
 (define-read-only (is-member (account principal))

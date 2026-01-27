@@ -53,7 +53,7 @@
     )
     (map-set stakers tx-sender {
       amount: new-amount,
-      start-block: block-height,
+      start-block: stacks-block-height,
       rewards-claimed: (get rewards-claimed current-stake)
     })
     ;; Update total staked
@@ -73,7 +73,7 @@
     (caller tx-sender)
   )
     (asserts! (>= staked-amount amount) ERR-INSUFFICIENT-BALANCE)
-    (asserts! (>= block-height (+ start-block LOCK-PERIOD)) ERR-STAKE-LOCKED)
+    (asserts! (>= stacks-block-height (+ start-block LOCK-PERIOD)) ERR-STAKE-LOCKED)
     ;; Transfer STX back to user
     (try! (withdraw-stx amount caller))
     ;; Update staker info
@@ -123,7 +123,7 @@
     ;; Update staker with compounded amount
     (map-set stakers tx-sender {
       amount: new-amount,
-      start-block: block-height,
+      start-block: stacks-block-height,
       rewards-claimed: (+ (get rewards-claimed staker-info) pending-rewards)
     })
     ;; Update totals
@@ -137,7 +137,7 @@
     (staker-info (default-to { amount: u0, start-block: u0, rewards-claimed: u0 } (map-get? stakers staker)))
     (staked-amount (get amount staker-info))
     (start-block (get start-block staker-info))
-    (blocks-staked (- block-height start-block))
+    (blocks-staked (- stacks-block-height start-block))
     (periods-completed (/ blocks-staked LOCK-PERIOD))
   )
     (if (> staked-amount u0)

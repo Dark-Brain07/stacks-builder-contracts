@@ -7,22 +7,22 @@ cache_dir = '.\.cache'
 requirements = []
 [contracts.dao-voting]
 path = 'contracts/dao-voting.clar'
-clarity_version = 2
+clarity_version = 3
 epoch = 'latest'
 
 [contracts.sip009-nft]
 path = 'contracts/sip009-nft.clar'
-clarity_version = 2
+clarity_version = 3
 epoch = 'latest'
 
 [contracts.sip010-token]
 path = 'contracts/sip010-token.clar'
-clarity_version = 2
+clarity_version = 3
 epoch = 'latest'
 
 [contracts.staking-pool]
 path = 'contracts/staking-pool.clar'
-clarity_version = 2
+clarity_version = 3
 epoch = 'latest'
 [repl.analysis]
 passes = [

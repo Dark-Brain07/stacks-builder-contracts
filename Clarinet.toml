@@ -5,8 +5,38 @@ authors = []
 telemetry = false
 cache_dir = '.\.cache'
 requirements = []
+[contracts.crowdfunding]
+path = 'contracts/crowdfunding.clar'
+clarity_version = 3
+epoch = 'latest'
+
 [contracts.dao-voting]
 path = 'contracts/dao-voting.clar'
+clarity_version = 3
+epoch = 'latest'
+
+[contracts.escrow-service]
+path = 'contracts/escrow-service.clar'
+clarity_version = 3
+epoch = 'latest'
+
+[contracts.lottery]
+path = 'contracts/lottery.clar'
+clarity_version = 3
+epoch = 'latest'
+
+[contracts.multisig-wallet]
+path = 'contracts/multisig-wallet.clar'
+clarity_version = 3
+epoch = 'latest'
+
+[contracts.name-service]
+path = 'contracts/name-service.clar'
+clarity_version = 3
+epoch = 'latest'
+
+[contracts.reward-points]
+path = 'contracts/reward-points.clar'
 clarity_version = 3
 epoch = 'latest'
 
@@ -24,10 +54,30 @@ epoch = 'latest'
 path = 'contracts/staking-pool.clar'
 clarity_version = 3
 epoch = 'latest'
+
+[contracts.subscription]
+path = 'contracts/subscription.clar'
+clarity_version = 3
+epoch = 'latest'
+
+[contracts.timelock-vault]
+path = 'contracts/timelock-vault.clar'
+clarity_version = 3
+epoch = 'latest'
+
+[contracts.token-swap]
+path = 'contracts/token-swap.clar'
+clarity_version = 3
+epoch = 'latest'
+
+[contracts.token-vesting]
+path = 'contracts/token-vesting.clar'
+clarity_version = 3
+epoch = 'latest'
 [repl.analysis]
 passes = [
-    'call_checker',
     'check_checker',
+    'call_checker',
 ]
 
 [repl.analysis.lint_groups]

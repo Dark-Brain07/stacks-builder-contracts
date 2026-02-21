@@ -1,0 +1,95 @@
+;; Token Swap Contract
+;; Simple STX-to-token swap pool
+;; Built by rajuice for Stacks Builder Rewards
+
+(define-fungible-token swap-token)
+
+(define-constant CONTRACT-OWNER tx-sender)
+(define-constant ERR-NOT-AUTHORIZED (err u401))
+(define-constant ERR-INSUFFICIENT-BALANCE (err u402))
+(define-constant ERR-ZERO-AMOUNT (err u403))
+(define-constant ERR-POOL-EMPTY (err u404))
+(define-constant ERR-SLIPPAGE (err u405))
+(define-constant SWAP-FEE u30) ;; 0.3% fee (30 basis points)
+
+(define-data-var stx-pool uint u0)
+(define-data-var token-pool uint u0)
+(define-data-var total-fees uint u0)
+
+;; Initialize token supply
+(define-public (initialize-pool (stx-amount uint) (token-amount uint))
+  (begin
+    (asserts! (is-eq tx-sender CONTRACT-OWNER) ERR-NOT-AUTHORIZED)
+    (try! (stx-transfer? stx-amount tx-sender (as-contract tx-sender)))
+    (try! (ft-mint? swap-token token-amount (as-contract tx-sender)))
+    (var-set stx-pool stx-amount)
+    (var-set token-pool token-amount)
+    (ok true)))
+
+(define-public (buy-tokens (stx-amount uint) (min-tokens uint))
+  (let (
+    (stx-reserve (var-get stx-pool))
+    (token-reserve (var-get token-pool))
+    (fee (/ (* stx-amount SWAP-FEE) u10000))
+    (net-amount (- stx-amount fee))
+    (tokens-out (/ (* net-amount token-reserve) (+ stx-reserve net-amount)))
+  )
+    (asserts! (> stx-amount u0) ERR-ZERO-AMOUNT)
+    (asserts! (> token-reserve u0) ERR-POOL-EMPTY)
+    (asserts! (>= tokens-out min-tokens) ERR-SLIPPAGE)
+    (try! (stx-transfer? stx-amount tx-sender (as-contract tx-sender)))
+    (try! (as-contract (ft-transfer? swap-token tokens-out tx-sender tx-sender)))
+    (var-set stx-pool (+ stx-reserve stx-amount))
+    (var-set token-pool (- token-reserve tokens-out))
+    (var-set total-fees (+ (var-get total-fees) fee))
+    (ok tokens-out)))
+
+(define-public (sell-tokens (token-amount uint) (min-stx uint))
+  (let (
+    (stx-reserve (var-get stx-pool))
+    (token-reserve (var-get token-pool))
+    (fee (/ (* token-amount SWAP-FEE) u10000))
+    (net-amount (- token-amount fee))
+    (stx-out (/ (* net-amount stx-reserve) (+ token-reserve net-amount)))
+  )
+    (asserts! (> token-amount u0) ERR-ZERO-AMOUNT)
+    (asserts! (> stx-reserve u0) ERR-POOL-EMPTY)
+    (asserts! (>= stx-out min-stx) ERR-SLIPPAGE)
+    (try! (ft-transfer? swap-token token-amount tx-sender (as-contract tx-sender)))
+    (try! (as-contract (stx-transfer? stx-out tx-sender tx-sender)))
+    (var-set stx-pool (- stx-reserve stx-out))
+    (var-set token-pool (+ token-reserve token-amount))
+    (ok stx-out)))
+
+(define-public (add-liquidity (stx-amount uint))
+  (let (
+    (stx-reserve (var-get stx-pool))
+    (token-reserve (var-get token-pool))
+    (token-amount (/ (* stx-amount token-reserve) stx-reserve))
+  )
+    (try! (stx-transfer? stx-amount tx-sender (as-contract tx-sender)))
+    (try! (ft-mint? swap-token token-amount (as-contract tx-sender)))
+    (var-set stx-pool (+ stx-reserve stx-amount))
+    (var-set token-pool (+ token-reserve token-amount))
+    (ok token-amount)))
+
+(define-public (collect-fees)
+  (let ((fees (var-get total-fees)))
+    (asserts! (is-eq tx-sender CONTRACT-OWNER) ERR-NOT-AUTHORIZED)
+    (asserts! (> fees u0) ERR-ZERO-AMOUNT)
+    (try! (as-contract (stx-transfer? fees tx-sender CONTRACT-OWNER)))
+    (var-set total-fees u0)
+    (ok fees)))
+
+(define-read-only (get-price)
+  (let ((stx-r (var-get stx-pool)) (token-r (var-get token-pool)))
+    (if (> token-r u0) (ok (/ (* stx-r u1000000) token-r)) (ok u0))))
+
+(define-read-only (get-stx-pool) (ok (var-get stx-pool)))
+(define-read-only (get-token-pool) (ok (var-get token-pool)))
+(define-read-only (get-total-fees) (ok (var-get total-fees)))
+(define-read-only (get-token-balance (who principal)) (ok (ft-get-balance swap-token who)))
+(define-read-only (get-name) (ok "Swap Token"))
+(define-read-only (get-symbol) (ok "SWAP"))
+(define-read-only (get-decimals) (ok u6))
+(define-read-only (get-total-supply) (ok (ft-get-supply swap-token)))

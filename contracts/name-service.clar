@@ -1,6 +1,7 @@
 ;; Name Service Contract
 ;; Register and manage .stx names
 ;; Built by rajuice for Stacks Builder Rewards
+;; Clarity 4 compatible (no as-contract)
 
 (define-constant CONTRACT-OWNER tx-sender)
 (define-constant ERR-NOT-AUTHORIZED (err u401))
@@ -11,6 +12,7 @@
 (define-constant RENEWAL-PERIOD u52560) ;; ~1 year in blocks
 
 (define-data-var total-names uint u0)
+(define-data-var total-revenue uint u0)
 
 (define-map names (string-ascii 48) {
   owner: principal,
@@ -24,7 +26,7 @@
 (define-public (register-name (name (string-ascii 48)) (resolver principal))
   (begin
     (asserts! (is-none (map-get? names name)) ERR-NAME-TAKEN)
-    (try! (stx-transfer? REGISTRATION-FEE tx-sender (as-contract tx-sender)))
+    (try! (stx-transfer? REGISTRATION-FEE tx-sender CONTRACT-OWNER))
     (map-set names name {
       owner: tx-sender,
       resolver: resolver,
@@ -33,13 +35,15 @@
     })
     (map-set reverse-lookup tx-sender name)
     (var-set total-names (+ (var-get total-names) u1))
+    (var-set total-revenue (+ (var-get total-revenue) REGISTRATION-FEE))
     (ok true)))
 
 (define-public (renew-name (name (string-ascii 48)))
   (let ((entry (unwrap! (map-get? names name) ERR-NAME-NOT-FOUND)))
     (asserts! (is-eq tx-sender (get owner entry)) ERR-NOT-AUTHORIZED)
-    (try! (stx-transfer? REGISTRATION-FEE tx-sender (as-contract tx-sender)))
+    (try! (stx-transfer? REGISTRATION-FEE tx-sender CONTRACT-OWNER))
     (map-set names name (merge entry { expires-at: (+ (get expires-at entry) RENEWAL-PERIOD) }))
+    (var-set total-revenue (+ (var-get total-revenue) REGISTRATION-FEE))
     (ok true)))
 
 (define-public (transfer-name (name (string-ascii 48)) (new-owner principal))
@@ -76,3 +80,6 @@
 
 (define-read-only (get-registration-fee)
   (ok REGISTRATION-FEE))
+
+(define-read-only (get-total-revenue)
+  (ok (var-get total-revenue)))

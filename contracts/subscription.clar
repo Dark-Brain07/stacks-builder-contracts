@@ -1,15 +1,16 @@
 ;; Subscription Service Contract
-;; On-chain subscription management with recurring payments
+;; On-chain subscription management with payments
 ;; Built by rajuice for Stacks Builder Rewards
+;; Clarity 4 compatible (no as-contract)
 
 (define-constant CONTRACT-OWNER tx-sender)
 (define-constant ERR-NOT-AUTHORIZED (err u401))
 (define-constant ERR-PLAN-NOT-FOUND (err u404))
 (define-constant ERR-SUB-NOT-FOUND (err u405))
 (define-constant ERR-ALREADY-SUBSCRIBED (err u406))
-(define-constant ERR-SUB-EXPIRED (err u407))
 
 (define-data-var plan-count uint u0)
+(define-data-var total-revenue uint u0)
 
 (define-map plans uint {
   name: (string-utf8 50),
@@ -35,12 +36,13 @@
   (let ((plan (unwrap! (map-get? plans plan-id) ERR-PLAN-NOT-FOUND)))
     (asserts! (get active plan) ERR-PLAN-NOT-FOUND)
     (asserts! (is-none (map-get? subscriptions { user: tx-sender, plan-id: plan-id })) ERR-ALREADY-SUBSCRIBED)
-    (try! (stx-transfer? (get price plan) tx-sender (as-contract tx-sender)))
+    (try! (stx-transfer? (get price plan) tx-sender CONTRACT-OWNER))
     (map-set subscriptions { user: tx-sender, plan-id: plan-id } {
       start-height: stacks-block-height,
       end-height: (+ stacks-block-height (get duration plan)),
       auto-renew: false
     })
+    (var-set total-revenue (+ (var-get total-revenue) (get price plan)))
     (ok true)))
 
 (define-public (renew-subscription (plan-id uint))
@@ -48,9 +50,10 @@
     (plan (unwrap! (map-get? plans plan-id) ERR-PLAN-NOT-FOUND))
     (sub (unwrap! (map-get? subscriptions { user: tx-sender, plan-id: plan-id }) ERR-SUB-NOT-FOUND))
   )
-    (try! (stx-transfer? (get price plan) tx-sender (as-contract tx-sender)))
+    (try! (stx-transfer? (get price plan) tx-sender CONTRACT-OWNER))
     (map-set subscriptions { user: tx-sender, plan-id: plan-id }
       (merge sub { end-height: (+ (get end-height sub) (get duration plan)) }))
+    (var-set total-revenue (+ (var-get total-revenue) (get price plan)))
     (ok true)))
 
 (define-public (cancel-subscription (plan-id uint))
@@ -64,12 +67,6 @@
     (asserts! (is-eq tx-sender CONTRACT-OWNER) ERR-NOT-AUTHORIZED)
     (map-set plans plan-id (merge plan { active: (not (get active plan)) }))
     (ok true)))
-
-(define-public (withdraw-revenue)
-  (let ((balance (stx-get-balance (as-contract tx-sender))))
-    (asserts! (is-eq tx-sender CONTRACT-OWNER) ERR-NOT-AUTHORIZED)
-    (try! (as-contract (stx-transfer? balance tx-sender CONTRACT-OWNER)))
-    (ok balance)))
 
 (define-read-only (get-plan (plan-id uint))
   (map-get? plans plan-id))
@@ -85,3 +82,6 @@
 
 (define-read-only (get-plan-count)
   (ok (var-get plan-count)))
+
+(define-read-only (get-total-revenue)
+  (ok (var-get total-revenue)))

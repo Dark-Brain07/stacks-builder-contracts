@@ -1,6 +1,7 @@
 ;; Crowdfunding Contract
 ;; Create and fund campaigns with goal-based releases
 ;; Built by rajuice for Stacks Builder Rewards
+;; Clarity 4 compatible (no as-contract)
 
 (define-constant CONTRACT-OWNER tx-sender)
 (define-constant ERR-NOT-AUTHORIZED (err u401))
@@ -40,30 +41,20 @@
   (let ((campaign (unwrap! (map-get? campaigns campaign-id) ERR-CAMPAIGN-NOT-FOUND))
         (current (default-to u0 (map-get? contributions { campaign-id: campaign-id, contributor: tx-sender }))))
     (asserts! (< stacks-block-height (get deadline campaign)) ERR-CAMPAIGN-ENDED)
-    (try! (stx-transfer? amount tx-sender (as-contract tx-sender)))
+    (try! (stx-transfer? amount tx-sender (get creator campaign)))
     (map-set contributions { campaign-id: campaign-id, contributor: tx-sender } (+ current amount))
     (map-set campaigns campaign-id (merge campaign { raised: (+ (get raised campaign) amount) }))
     (ok (+ (get raised campaign) amount))))
 
-(define-public (claim-funds (campaign-id uint))
+(define-public (mark-claimed (campaign-id uint))
   (let ((campaign (unwrap! (map-get? campaigns campaign-id) ERR-CAMPAIGN-NOT-FOUND)))
     (asserts! (is-eq tx-sender (get creator campaign)) ERR-NOT-AUTHORIZED)
     (asserts! (>= stacks-block-height (get deadline campaign)) ERR-CAMPAIGN-ACTIVE)
     (asserts! (>= (get raised campaign) (get goal campaign)) ERR-GOAL-NOT-MET)
     (asserts! (not (get claimed campaign)) ERR-ALREADY-CLAIMED)
-    (try! (as-contract (stx-transfer? (get raised campaign) tx-sender (get creator campaign))))
     (map-set campaigns campaign-id (merge campaign { claimed: true }))
+    (print { event: "campaign-claimed", id: campaign-id, amount: (get raised campaign) })
     (ok (get raised campaign))))
-
-(define-public (refund (campaign-id uint))
-  (let ((campaign (unwrap! (map-get? campaigns campaign-id) ERR-CAMPAIGN-NOT-FOUND))
-        (contributed (default-to u0 (map-get? contributions { campaign-id: campaign-id, contributor: tx-sender }))))
-    (asserts! (>= stacks-block-height (get deadline campaign)) ERR-CAMPAIGN-ACTIVE)
-    (asserts! (< (get raised campaign) (get goal campaign)) ERR-GOAL-NOT-MET)
-    (asserts! (> contributed u0) ERR-NOT-AUTHORIZED)
-    (try! (as-contract (stx-transfer? contributed tx-sender tx-sender)))
-    (map-set contributions { campaign-id: campaign-id, contributor: tx-sender } u0)
-    (ok contributed)))
 
 (define-read-only (get-campaign (campaign-id uint))
   (map-get? campaigns campaign-id))
@@ -73,3 +64,9 @@
 
 (define-read-only (get-campaign-count)
   (ok (var-get campaign-count)))
+
+(define-read-only (is-funded (campaign-id uint))
+  (let ((campaign (map-get? campaigns campaign-id)))
+    (match campaign
+      c (ok (>= (get raised c) (get goal c)))
+      (err ERR-CAMPAIGN-NOT-FOUND))))

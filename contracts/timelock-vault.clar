@@ -1,7 +1,9 @@
 ;; Timelock Vault Contract
 ;; Lock STX for a specified duration before withdrawal
 ;; Built by rajuice for Stacks Builder Rewards
+;; Clarity 4 compatible (no as-contract)
 
+(define-constant CONTRACT-OWNER tx-sender)
 (define-constant ERR-NOT-AUTHORIZED (err u401))
 (define-constant ERR-VAULT-NOT-FOUND (err u404))
 (define-constant ERR-STILL-LOCKED (err u405))
@@ -19,10 +21,11 @@
   beneficiary: principal
 })
 
+;; Create vault - funds held by contract owner
 (define-public (create-vault (amount uint) (lock-blocks uint) (beneficiary principal))
   (let ((vault-id (+ (var-get vault-count) u1)))
     (asserts! (>= lock-blocks MIN-LOCK) ERR-INVALID-DURATION)
-    (try! (stx-transfer? amount tx-sender (as-contract tx-sender)))
+    (try! (stx-transfer? amount tx-sender CONTRACT-OWNER))
     (map-set vaults vault-id {
       owner: tx-sender,
       amount: amount,
@@ -33,15 +36,17 @@
     (var-set vault-count vault-id)
     (ok vault-id)))
 
-(define-public (withdraw-vault (vault-id uint))
+;; Owner releases funds after unlock
+(define-public (release-vault (vault-id uint))
   (let ((vault (unwrap! (map-get? vaults vault-id) ERR-VAULT-NOT-FOUND)))
-    (asserts! (or (is-eq tx-sender (get owner vault)) (is-eq tx-sender (get beneficiary vault))) ERR-NOT-AUTHORIZED)
+    (asserts! (is-eq tx-sender CONTRACT-OWNER) ERR-NOT-AUTHORIZED)
     (asserts! (>= stacks-block-height (get unlock-height vault)) ERR-STILL-LOCKED)
     (asserts! (not (get withdrawn vault)) ERR-ALREADY-WITHDRAWN)
-    (try! (as-contract (stx-transfer? (get amount vault) tx-sender (get beneficiary vault))))
+    (try! (stx-transfer? (get amount vault) tx-sender (get beneficiary vault)))
     (map-set vaults vault-id (merge vault { withdrawn: true }))
     (ok (get amount vault))))
 
+;; Extend lock period
 (define-public (extend-lock (vault-id uint) (extra-blocks uint))
   (let ((vault (unwrap! (map-get? vaults vault-id) ERR-VAULT-NOT-FOUND)))
     (asserts! (is-eq tx-sender (get owner vault)) ERR-NOT-AUTHORIZED)

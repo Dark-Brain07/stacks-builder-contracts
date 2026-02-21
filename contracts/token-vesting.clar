@@ -1,6 +1,7 @@
 ;; Token Vesting Contract
 ;; Linear vesting schedule for token distribution
 ;; Built by rajuice for Stacks Builder Rewards
+;; Clarity 4 compatible (no as-contract)
 
 (define-fungible-token vested-token)
 
@@ -22,10 +23,11 @@
   revoked: bool
 })
 
+;; Create a vesting schedule and mint tokens to owner for distribution
 (define-public (create-vesting (beneficiary principal) (total-amount uint) (cliff-blocks uint) (vesting-blocks uint))
   (let ((schedule-id (+ (var-get schedule-count) u1)))
     (asserts! (is-eq tx-sender CONTRACT-OWNER) ERR-NOT-AUTHORIZED)
-    (try! (ft-mint? vested-token total-amount (as-contract tx-sender)))
+    (try! (ft-mint? vested-token total-amount CONTRACT-OWNER))
     (map-set vesting-schedules schedule-id {
       beneficiary: beneficiary,
       total-amount: total-amount,
@@ -38,17 +40,19 @@
     (var-set schedule-count schedule-id)
     (ok schedule-id)))
 
-(define-public (claim-vested (schedule-id uint))
+;; Owner distributes vested tokens to beneficiary
+(define-public (distribute-vested (schedule-id uint))
   (let (
     (schedule (unwrap! (map-get? vesting-schedules schedule-id) ERR-SCHEDULE-NOT-FOUND))
     (claimable (get-claimable-amount schedule-id))
   )
-    (asserts! (is-eq tx-sender (get beneficiary schedule)) ERR-NOT-AUTHORIZED)
+    (asserts! (is-eq tx-sender CONTRACT-OWNER) ERR-NOT-AUTHORIZED)
     (asserts! (> claimable u0) ERR-NOTHING-TO-CLAIM)
-    (try! (as-contract (ft-transfer? vested-token claimable tx-sender (get beneficiary schedule))))
+    (try! (ft-transfer? vested-token claimable CONTRACT-OWNER (get beneficiary schedule)))
     (map-set vesting-schedules schedule-id (merge schedule { claimed: (+ (get claimed schedule) claimable) }))
     (ok claimable)))
 
+;; Revoke vesting
 (define-public (revoke-vesting (schedule-id uint))
   (let ((schedule (unwrap! (map-get? vesting-schedules schedule-id) ERR-SCHEDULE-NOT-FOUND)))
     (asserts! (is-eq tx-sender CONTRACT-OWNER) ERR-NOT-AUTHORIZED)

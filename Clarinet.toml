@@ -5,223 +5,153 @@ authors = []
 telemetry = false
 cache_dir = '.\.cache'
 requirements = []
-[contracts.achievement-badges]
-path = 'contracts/achievement-badges.clar'
+[contracts.carbon-credit]
+path = 'contracts/carbon-credit.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.asset-registry]
-path = 'contracts/asset-registry.clar'
+[contracts.coupon-system]
+path = 'contracts/coupon-system.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.auction-house]
-path = 'contracts/auction-house.clar'
+[contracts.crop-takaful]
+path = 'contracts/crop-takaful.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.bounty-board]
-path = 'contracts/bounty-board.clar'
+[contracts.crowdsource-data]
+path = 'contracts/crowdsource-data.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.certificate-nft]
-path = 'contracts/certificate-nft.clar'
+[contracts.data-marketplace]
+path = 'contracts/data-marketplace.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.charity-donation]
-path = 'contracts/charity-donation.clar'
+[contracts.delivery-tracker]
+path = 'contracts/delivery-tracker.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.community-grants]
-path = 'contracts/community-grants.clar'
+[contracts.dispute-resolver]
+path = 'contracts/dispute-resolver.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.content-license]
-path = 'contracts/content-license.clar'
+[contracts.document-notary]
+path = 'contracts/document-notary.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.crowdfunding]
-path = 'contracts/crowdfunding.clar'
-clarity_version = 3
-epoch = 'latest'
-
-[contracts.dao-voting]
-path = 'contracts/dao-voting.clar'
-clarity_version = 3
-epoch = 'latest'
-
-[contracts.escrow-service]
-path = 'contracts/escrow-service.clar'
-clarity_version = 3
-epoch = 'latest'
-
-[contracts.event-tickets]
-path = 'contracts/event-tickets.clar'
+[contracts.donation-matching]
+path = 'contracts/donation-matching.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.freelance-pay]
-path = 'contracts/freelance-pay.clar'
+[contracts.escrow-milestone]
+path = 'contracts/escrow-milestone.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.governance-token]
-path = 'contracts/governance-token.clar'
+[contracts.gift-card]
+path = 'contracts/gift-card.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.identity-verifier]
-path = 'contracts/identity-verifier.clar'
+[contracts.halal-fund]
+path = 'contracts/halal-fund.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.inventory-manager]
-path = 'contracts/inventory-manager.clar'
+[contracts.health-record]
+path = 'contracts/health-record.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.invoice-manager]
-path = 'contracts/invoice-manager.clar'
+[contracts.job-board]
+path = 'contracts/job-board.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.land-registry]
-path = 'contracts/land-registry.clar'
+[contracts.knowledge-rewards]
+path = 'contracts/knowledge-rewards.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.lottery]
-path = 'contracts/lottery.clar'
-clarity_version = 3
-epoch = 'latest'
-
-[contracts.marketplace]
-path = 'contracts/marketplace.clar'
+[contracts.micro-finance]
+path = 'contracts/micro-finance.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.membership-club]
-path = 'contracts/membership-club.clar'
+[contracts.musharakah]
+path = 'contracts/musharakah.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.multisig-wallet]
-path = 'contracts/multisig-wallet.clar'
-clarity_version = 3
-epoch = 'latest'
-
-[contracts.name-service]
-path = 'contracts/name-service.clar'
-clarity_version = 3
-epoch = 'latest'
-
-[contracts.payroll-system]
-path = 'contracts/payroll-system.clar'
+[contracts.peer-lending]
+path = 'contracts/peer-lending.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.profit-distributor]
-path = 'contracts/profit-distributor.clar'
+[contracts.petition-system]
+path = 'contracts/petition-system.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.referral-program]
-path = 'contracts/referral-program.clar'
+[contracts.pledge-manager]
+path = 'contracts/pledge-manager.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.rent-payment]
-path = 'contracts/rent-payment.clar'
+[contracts.price-oracle]
+path = 'contracts/price-oracle.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.review-system]
-path = 'contracts/review-system.clar'
+[contracts.property-share]
+path = 'contracts/property-share.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.reward-points]
-path = 'contracts/reward-points.clar'
-clarity_version = 3
-epoch = 'latest'
-
-[contracts.savings-goal]
-path = 'contracts/savings-goal.clar'
+[contracts.qard-hasan]
+path = 'contracts/qard-hasan.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.sip009-nft]
-path = 'contracts/sip009-nft.clar'
-clarity_version = 3
-epoch = 'latest'
-
-[contracts.sip010-token]
-path = 'contracts/sip010-token.clar'
-clarity_version = 3
-epoch = 'latest'
-
-[contracts.skills-registry]
-path = 'contracts/skills-registry.clar'
+[contracts.quadratic-voting]
+path = 'contracts/quadratic-voting.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.staking-pool]
-path = 'contracts/staking-pool.clar'
-clarity_version = 3
-epoch = 'latest'
-
-[contracts.subscription]
-path = 'contracts/subscription.clar'
-clarity_version = 3
-epoch = 'latest'
-
-[contracts.supply-chain]
-path = 'contracts/supply-chain.clar'
+[contracts.reputation-score]
+path = 'contracts/reputation-score.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.takaful-pool]
-path = 'contracts/takaful-pool.clar'
+[contracts.scholarship-fund]
+path = 'contracts/scholarship-fund.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.task-manager]
-path = 'contracts/task-manager.clar'
+[contracts.social-impact]
+path = 'contracts/social-impact.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.timelock-vault]
-path = 'contracts/timelock-vault.clar'
-clarity_version = 3
-epoch = 'latest'
-
-[contracts.token-swap]
-path = 'contracts/token-swap.clar'
-clarity_version = 3
-epoch = 'latest'
-
-[contracts.token-vesting]
-path = 'contracts/token-vesting.clar'
-clarity_version = 3
-epoch = 'latest'
-
-[contracts.voting-registry]
-path = 'contracts/voting-registry.clar'
+[contracts.time-bank]
+path = 'contracts/time-bank.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.warranty-tracker]
-path = 'contracts/warranty-tracker.clar'
+[contracts.waqf-fund]
+path = 'contracts/waqf-fund.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.zakat-tracker]
-path = 'contracts/zakat-tracker.clar'
+[contracts.wasiyyah-will]
+path = 'contracts/wasiyyah-will.clar'
 clarity_version = 4
 epoch = 'latest'
 [repl.analysis]

@@ -5,6 +5,46 @@ authors = []
 telemetry = false
 cache_dir = '.\.cache'
 requirements = []
+[contracts.achievement-badges]
+path = 'contracts/achievement-badges.clar'
+clarity_version = 4
+epoch = 'latest'
+
+[contracts.asset-registry]
+path = 'contracts/asset-registry.clar'
+clarity_version = 4
+epoch = 'latest'
+
+[contracts.auction-house]
+path = 'contracts/auction-house.clar'
+clarity_version = 4
+epoch = 'latest'
+
+[contracts.bounty-board]
+path = 'contracts/bounty-board.clar'
+clarity_version = 4
+epoch = 'latest'
+
+[contracts.certificate-nft]
+path = 'contracts/certificate-nft.clar'
+clarity_version = 4
+epoch = 'latest'
+
+[contracts.charity-donation]
+path = 'contracts/charity-donation.clar'
+clarity_version = 4
+epoch = 'latest'
+
+[contracts.community-grants]
+path = 'contracts/community-grants.clar'
+clarity_version = 4
+epoch = 'latest'
+
+[contracts.content-license]
+path = 'contracts/content-license.clar'
+clarity_version = 4
+epoch = 'latest'
+
 [contracts.crowdfunding]
 path = 'contracts/crowdfunding.clar'
 clarity_version = 3
@@ -20,9 +60,54 @@ path = 'contracts/escrow-service.clar'
 clarity_version = 3
 epoch = 'latest'
 
+[contracts.event-tickets]
+path = 'contracts/event-tickets.clar'
+clarity_version = 4
+epoch = 'latest'
+
+[contracts.freelance-pay]
+path = 'contracts/freelance-pay.clar'
+clarity_version = 4
+epoch = 'latest'
+
+[contracts.governance-token]
+path = 'contracts/governance-token.clar'
+clarity_version = 4
+epoch = 'latest'
+
+[contracts.identity-verifier]
+path = 'contracts/identity-verifier.clar'
+clarity_version = 4
+epoch = 'latest'
+
+[contracts.inventory-manager]
+path = 'contracts/inventory-manager.clar'
+clarity_version = 4
+epoch = 'latest'
+
+[contracts.invoice-manager]
+path = 'contracts/invoice-manager.clar'
+clarity_version = 4
+epoch = 'latest'
+
+[contracts.land-registry]
+path = 'contracts/land-registry.clar'
+clarity_version = 4
+epoch = 'latest'
+
 [contracts.lottery]
 path = 'contracts/lottery.clar'
 clarity_version = 3
+epoch = 'latest'
+
+[contracts.marketplace]
+path = 'contracts/marketplace.clar'
+clarity_version = 4
+epoch = 'latest'
+
+[contracts.membership-club]
+path = 'contracts/membership-club.clar'
+clarity_version = 4
 epoch = 'latest'
 
 [contracts.multisig-wallet]
@@ -35,9 +120,39 @@ path = 'contracts/name-service.clar'
 clarity_version = 3
 epoch = 'latest'
 
+[contracts.payroll-system]
+path = 'contracts/payroll-system.clar'
+clarity_version = 4
+epoch = 'latest'
+
+[contracts.profit-distributor]
+path = 'contracts/profit-distributor.clar'
+clarity_version = 4
+epoch = 'latest'
+
+[contracts.referral-program]
+path = 'contracts/referral-program.clar'
+clarity_version = 4
+epoch = 'latest'
+
+[contracts.rent-payment]
+path = 'contracts/rent-payment.clar'
+clarity_version = 4
+epoch = 'latest'
+
+[contracts.review-system]
+path = 'contracts/review-system.clar'
+clarity_version = 4
+epoch = 'latest'
+
 [contracts.reward-points]
 path = 'contracts/reward-points.clar'
 clarity_version = 3
+epoch = 'latest'
+
+[contracts.savings-goal]
+path = 'contracts/savings-goal.clar'
+clarity_version = 4
 epoch = 'latest'
 
 [contracts.sip009-nft]
@@ -50,6 +165,11 @@ path = 'contracts/sip010-token.clar'
 clarity_version = 3
 epoch = 'latest'
 
+[contracts.skills-registry]
+path = 'contracts/skills-registry.clar'
+clarity_version = 4
+epoch = 'latest'
+
 [contracts.staking-pool]
 path = 'contracts/staking-pool.clar'
 clarity_version = 3
@@ -58,6 +178,21 @@ epoch = 'latest'
 [contracts.subscription]
 path = 'contracts/subscription.clar'
 clarity_version = 3
+epoch = 'latest'
+
+[contracts.supply-chain]
+path = 'contracts/supply-chain.clar'
+clarity_version = 4
+epoch = 'latest'
+
+[contracts.takaful-pool]
+path = 'contracts/takaful-pool.clar'
+clarity_version = 4
+epoch = 'latest'
+
+[contracts.task-manager]
+path = 'contracts/task-manager.clar'
+clarity_version = 4
 epoch = 'latest'
 
 [contracts.timelock-vault]
@@ -73,6 +208,21 @@ epoch = 'latest'
 [contracts.token-vesting]
 path = 'contracts/token-vesting.clar'
 clarity_version = 3
+epoch = 'latest'
+
+[contracts.voting-registry]
+path = 'contracts/voting-registry.clar'
+clarity_version = 4
+epoch = 'latest'
+
+[contracts.warranty-tracker]
+path = 'contracts/warranty-tracker.clar'
+clarity_version = 4
+epoch = 'latest'
+
+[contracts.zakat-tracker]
+path = 'contracts/zakat-tracker.clar'
+clarity_version = 4
 epoch = 'latest'
 [repl.analysis]
 passes = [

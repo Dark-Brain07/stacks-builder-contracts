@@ -1,0 +1,15 @@
+;; Zikr Counter - Digital dhikr tracking
+;; Halal - remembrance of Allah
+(define-constant ERR-NONE (err u404))
+(define-data-var global-zikr uint u0)
+(define-map user-zikr principal { total: uint, sessions: uint, last-block: uint })
+(define-map zikr-types (string-ascii 30) uint)
+(define-public (count-zikr (zikr-type (string-ascii 30)) (count uint))
+  (let ((u (default-to { total: u0, sessions: u0, last-block: u0 } (map-get? user-zikr tx-sender)))
+        (prev (default-to u0 (map-get? zikr-types zikr-type))))
+    (map-set user-zikr tx-sender { total: (+ (get total u) count), sessions: (+ (get sessions u) u1), last-block: stacks-block-height })
+    (map-set zikr-types zikr-type (+ prev count))
+    (var-set global-zikr (+ (var-get global-zikr) count)) (ok count)))
+(define-read-only (get-user-zikr (who principal)) (map-get? user-zikr who))
+(define-read-only (get-zikr-type (t (string-ascii 30))) (ok (default-to u0 (map-get? zikr-types t))))
+(define-read-only (get-global-zikr) (ok (var-get global-zikr)))

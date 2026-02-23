@@ -5,159 +5,159 @@ authors = []
 telemetry = false
 cache_dir = '.\.cache'
 requirements = []
-[contracts.bicycle-share]
-path = 'contracts/bicycle-share.clar'
+[contracts.aqiqah-fund]
+path = 'contracts/aqiqah-fund.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.blood-drive]
-path = 'contracts/blood-drive.clar'
+[contracts.blanket-drive]
+path = 'contracts/blanket-drive.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.calligraphy-nft]
-path = 'contracts/calligraphy-nft.clar'
+[contracts.braille-press]
+path = 'contracts/braille-press.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.charity-run]
-path = 'contracts/charity-run.clar'
+[contracts.carpool-app]
+path = 'contracts/carpool-app.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.charity-walk]
-path = 'contracts/charity-walk.clar'
+[contracts.deaf-support]
+path = 'contracts/deaf-support.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.clean-ocean]
-path = 'contracts/clean-ocean.clar'
+[contracts.dua-journal]
+path = 'contracts/dua-journal.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.clothing-drive]
-path = 'contracts/clothing-drive.clar'
+[contracts.eye-clinic]
+path = 'contracts/eye-clinic.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.craft-market]
-path = 'contracts/craft-market.clar'
+[contracts.fiqh-course]
+path = 'contracts/fiqh-course.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.dawah-center]
-path = 'contracts/dawah-center.clar'
+[contracts.food-pantry]
+path = 'contracts/food-pantry.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.debate-club]
-path = 'contracts/debate-club.clar'
+[contracts.grocery-coop]
+path = 'contracts/grocery-coop.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.eid-gift]
-path = 'contracts/eid-gift.clar'
+[contracts.hadith-quiz]
+path = 'contracts/hadith-quiz.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.elder-wisdom]
-path = 'contracts/elder-wisdom.clar'
+[contracts.herbal-garden]
+path = 'contracts/herbal-garden.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.farm-share]
-path = 'contracts/farm-share.clar'
+[contracts.hijab-fund]
+path = 'contracts/hijab-fund.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.first-aid]
-path = 'contracts/first-aid.clar'
+[contracts.hijrah-assist]
+path = 'contracts/hijrah-assist.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.funeral-fund]
-path = 'contracts/funeral-fund.clar'
+[contracts.iftar-catering]
+path = 'contracts/iftar-catering.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.green-masjid]
-path = 'contracts/green-masjid.clar'
+[contracts.language-class]
+path = 'contracts/language-class.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.health-clinic]
-path = 'contracts/health-clinic.clar'
+[contracts.math-tutor]
+path = 'contracts/math-tutor.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.homeless-shelter]
-path = 'contracts/homeless-shelter.clar'
+[contracts.milk-bank]
+path = 'contracts/milk-bank.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.honey-coop]
-path = 'contracts/honey-coop.clar'
+[contracts.mosque-library]
+path = 'contracts/mosque-library.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.mental-health]
-path = 'contracts/mental-health.clar'
+[contracts.pottery-guild]
+path = 'contracts/pottery-guild.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.micro-lending]
-path = 'contracts/micro-lending.clar'
+[contracts.prayer-time]
+path = 'contracts/prayer-time.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.ramadan-iftar]
-path = 'contracts/ramadan-iftar.clar'
+[contracts.quran-audio]
+path = 'contracts/quran-audio.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.refugee-aid]
-path = 'contracts/refugee-aid.clar'
+[contracts.rain-harvest]
+path = 'contracts/rain-harvest.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.school-supply]
-path = 'contracts/school-supply.clar'
+[contracts.ruqyah-center]
+path = 'contracts/ruqyah-center.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.vaccine-tracker]
-path = 'contracts/vaccine-tracker.clar'
+[contracts.sewing-circle]
+path = 'contracts/sewing-circle.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.water-filter]
-path = 'contracts/water-filter.clar'
+[contracts.shoe-drive]
+path = 'contracts/shoe-drive.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.wedding-fund]
-path = 'contracts/wedding-fund.clar'
+[contracts.solar-farm]
+path = 'contracts/solar-farm.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.widow-support]
-path = 'contracts/widow-support.clar'
+[contracts.tahfiz-school]
+path = 'contracts/tahfiz-school.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.winter-relief]
-path = 'contracts/winter-relief.clar'
+[contracts.toy-drive]
+path = 'contracts/toy-drive.clar'
 clarity_version = 4
 epoch = 'latest'
 
-[contracts.youth-camp]
-path = 'contracts/youth-camp.clar'
+[contracts.zikr-counter]
+path = 'contracts/zikr-counter.clar'
 clarity_version = 4
 epoch = 'latest'
 [repl.analysis]
 passes = [
-    'check_checker',
     'call_checker',
+    'check_checker',
 ]
 
 [repl.analysis.lint_groups]

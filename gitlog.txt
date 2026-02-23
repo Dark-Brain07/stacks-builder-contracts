@@ -1,0 +1,11 @@
+﻿c83f64c feat: Add 30 new unique halal smart contracts (Round 7)
+4b12c92 feat: Add 30 new unique halal smart contracts (Round 6)
+47406d2 feat: Add 30 new unique halal smart contracts (Round 5)
+bd881d9 feat: Add 30 new unique halal smart contracts (Round 4)
+554e0c3 feat: Add 30 new unique halal smart contracts (Round 3)
+abcf660 feat: Add 30 halal smart contracts for mainnet deployment
+35da526 fix: Remove as-contract from all contracts for Clarity 4 mainnet compatibility
+e71d266 fix: Make all contracts halal - replace lottery with community treasury, replace interest-based staking with profit-sharing model
+20efda7 feat: Add 10 new contracts - multisig, escrow, timelock, vesting, lottery, crowdfunding, names, subscriptions, rewards, swap
+4d0dd99 fix: Use stacks-block-height for Clarity 3 compatibility on testnet
+a76bc08 feat: Add Stacks smart contracts - SIP-010 Token, SIP-009 NFT, Staking Pool, DAO Voting
